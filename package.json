@@ -1,0 +1,83 @@
+{
+  "name": "spritenote",
+  "productName": "SpriteNote",
+  "version": "1.8.11",
+  "description": "SpriteNote, companion local de notas, tareas, recordatorios, fechas y hábitos con ejecución en segundo plano.",
+  "main": "electron/main.js",
+  "author": "SpriteNote",
+  "homepage": "https://github.com/",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "start:linux": "electron .",
+    "test": "node --test tests/*.test.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist:linux": "electron-builder --linux AppImage tar.xz",
+    "dist:arch": "electron-builder --linux AppImage tar.xz"
+  },
+  "keywords": [
+    "notes",
+    "tasks",
+    "terminal",
+    "neofetch",
+    "electron",
+    "spritenote",
+    "background",
+    "linux",
+    "arch-linux",
+    "wayland",
+    "hyprland",
+    "pipewire"
+  ],
+  "devDependencies": {
+    "electron": "42.9.1",
+    "electron-builder": "26.15.7"
+  },
+  "build": {
+    "appId": "com.spritenote.app",
+    "productName": "SpriteNote",
+    "asar": true,
+    "files": [
+      "electron/**/*",
+      "shared/**/*",
+      "src/**/*",
+      "build/icon.png",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "linux": {
+      "icon": "build/icon.png",
+      "target": [
+        "AppImage",
+        "tar.xz"
+      ],
+      "category": "Utility",
+      "executableName": "spritenote",
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "desktop": {
+        "entry": {
+          "Name": "SpriteNote",
+          "Comment": "Notas, tareas, recordatorios e IA con estética terminal",
+          "Categories": "Utility;Office;",
+          "Keywords": "notes;tasks;terminal;spritenote;ai;",
+          "StartupWMClass": "SpriteNote"
+        }
+      }
+    }
+  },
+  "overrides": {
+    "@electron/asar": "4.2.0",
+    "@electron/get": "5.0.0",
+    "glob": "13.0.6",
+    "rimraf": "4.4.1",
+    "fast-uri": "3.1.4",
+    "js-yaml": "4.3.1"
+  },
+  "desktopName": "SpriteNote",
+  "allowScripts": {
+    "electron-winstaller": false
+  }
+}

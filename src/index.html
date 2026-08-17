@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="vapor">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spritenote</title>
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/sprite.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ════════ SIDEBAR ════════ -->
+  <aside id="sidebar">
+    <div class="sb-window-title">
+      <span class="tty-lights" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>~/spritenote — tty1</span>
+    </div>
+
+    <!-- Claw'd protagonista -->
+    <div id="clawd-hero-wrap">
+      <img id="clawd-canvas" src="assets/clawd-laptop.gif" alt="Claw'd" title="¡pícame!">
+      <div class="clawd-name-row">
+        <img id="sb-logo" class="sb-logo" src="assets/logo.png" alt="" onerror="this.style.display='none'">
+        <div class="clawd-name">SPRITENOTE</div>
+      </div>
+      <div class="clawd-mood-label" id="sb-sprite-mood">coding</div>
+    </div>
+
+    <hr class="sb-divider">
+
+    <!-- Neofetch -->
+    <div id="neofetch-wrap">
+      <div class="neofetch" id="neofetch"></div>
+    </div>
+
+    <hr class="sb-divider">
+
+    <nav id="nav">
+      <button class="nav-btn active" data-view="home"><span class="nav-icon">⌂</span><span>inicio</span><span class="nav-key">1</span></button>
+      <button class="nav-btn" data-view="notes"><span class="nav-icon">▤</span><span>notas</span><span class="nav-key">2</span></button>
+      <button class="nav-btn" data-view="tasks"><span class="nav-icon">◇</span><span>tareas</span><span class="nav-key">3</span></button>
+      <button class="nav-btn" data-view="reminders"><span class="nav-icon">◷</span><span>recordatorios</span><span class="nav-key">4</span></button>
+      <button class="nav-btn" data-view="habits"><span class="nav-icon">❉</span><span>hábitos</span><span class="nav-key">5</span></button>
+      <button class="nav-btn" data-view="dates"><span class="nav-icon">▣</span><span>fechas</span><span class="nav-key">6</span></button>
+      <button class="nav-btn" data-view="calendar"><span class="nav-icon">▦</span><span>calendario</span><span class="nav-key">7</span></button>
+      <button class="nav-btn" data-view="ai"><span class="nav-icon">✦</span><span>IA</span><span class="nav-key">8</span></button>
+    </nav>
+
+    <div id="theme-switch">
+      <div class="theme-label">
+        <span>◆ PHOSPHOR · TEMA</span>
+        <span class="theme-label-actions">
+          <span id="theme-current-label">vaporwave</span>
+          <button type="button" id="visualizer-settings-open" class="visualizer-settings-open" title="ajustes de SpriteNote" aria-haspopup="dialog" aria-controls="visualizer-settings-overlay" aria-expanded="false">&#9881;</button>
+        </span>
+      </div>
+      <div class="theme-dots">
+        <button class="theme-dot" data-t="green" title="green"></button>
+        <button class="theme-dot" data-t="amber" title="amber"></button>
+        <button class="theme-dot" data-t="mono" title="ibm 5151"></button>
+        <button class="theme-dot" data-t="cyan" title="ice"></button>
+        <button class="theme-dot" data-t="ember" title="ember"></button>
+        <button class="theme-dot" data-t="synth" title="synthwave"></button>
+        <button class="theme-dot" data-t="vapor" title="vaporwave"></button>
+        <button class="theme-dot" data-t="outrun" title="outrun"></button>
+        <button class="theme-dot" data-t="dos" title="dos blue"></button>
+        <button class="theme-dot" data-t="matrix" title="matrix"></button>
+        <button class="theme-dot" data-t="lime" title="lime inv"></button>
+        <button class="theme-dot" data-t="catppuccin" title="catppuccin"></button>
+      </div>
+      <button id="crt-toggle" type="button"><span>CRT MODE</span><span id="crt-label">● ON</span></button>
+    </div>
+  </aside>
+
+  <!-- ════════ MAIN ════════ -->
+  <main id="main">
+
+    <!-- INICIO -->
+    <section class="view active" id="view-home">
+      <div class="view-header">
+        <span class="view-prompt"><span class="nf-prompt-user">user</span><span class="tilde">@</span>spritenote <span class="cmd">~/inicio</span></span>
+        <span class="view-sub">presiona <b>:</b> para comandos · 1-8 para vistas</span>
+      </div>
+
+      <div class="home-banner">
+        <div class="clawd-hero">
+          <img id="clawd-hero-gif" class="clawd-hero-gif" src="assets/clawd-celebracion.gif" alt="Claw'd">
+          <div class="clawd-phrase" id="clawd-phrase" contenteditable="true" spellcheck="false" data-ph="escribe una frase..."></div>
+        </div>
+        <div class="home-greet">
+          <h2 id="home-greet-title">Buen día, estudiante</h2>
+          <div class="greet-sub">tu espacio local de notas, tareas y fechas — todo guardado en este equipo.</div>
+          <div class="quote-box" id="home-quote"></div>
+        </div>
+      </div>
+
+      <div class="system-monitor tbox">
+        <span class="tbox-title">SYSTEM MONITOR — sprite-top</span>
+        <div class="sys-grid">
+          <section class="sys-meter sys-audio" aria-label="Visualizador de música">
+            <div class="sys-head">
+              <span>MUSIC SPECTRUM</span>
+              <div class="music-viz-head-actions">
+                <b id="music-viz-status">STANDBY</b>
+                <button type="button" class="music-viz-toggle" id="music-viz-toggle" aria-pressed="false" aria-label="activar captura del audio del sistema" title="activar captura del audio del sistema">
+                  <span class="music-viz-power" aria-hidden="true">▶</span><span class="music-viz-toggle-label" id="music-viz-toggle-label">ACTIVAR</span>
+                </button>
+              </div>
+            </div>
+            <div class="music-visualizer" id="music-visualizer">
+              <canvas id="music-spectrum-canvas" aria-label="Espectro del audio del sistema"></canvas>
+              <div class="music-viz-message" id="music-viz-message">AUDIO LOOPBACK // STANDBY</div>
+            </div>
+          </section>
+          <section class="sys-meter sys-osc" aria-label="Osciloscope monitor">
+            <div class="sys-head"><span>OSCILOSCOPE</span><b id="sys-osc-pct">--%</b></div>
+            <svg class="oscilloscope" viewBox="0 0 320 76" preserveAspectRatio="none" role="img" aria-label="memory oscilloscope">
+              <line x1="0" y1="38" x2="320" y2="38" class="osc-axis"></line>
+              <line x1="164" y1="0" x2="164" y2="76" class="osc-axis osc-axis-v"></line>
+              <polyline id="sys-osc-line" points="0,38 320,38"></polyline>
+            </svg>
+          </section>
+          <section class="sys-meter sys-netgrid" aria-label="Network vaporwave grid">
+            <div class="sys-head"><span>GRID</span><b id="sys-grid-rate">--K</b></div>
+            <div class="vapor-grid" id="sys-vapor-grid" aria-hidden="true">
+              <div class="grid-horizon"></div>
+              <div class="grid-plane grid-ceiling"></div>
+              <div class="grid-plane grid-floor"></div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div class="home-grid">
+        <div class="tbox">
+          <span class="tbox-title">tareas pendientes <span id="home-tasks-count" style="color:var(--text-faint)"></span></span>
+          <div class="tbox-body" id="home-tasks"></div>
+        </div>
+        <div class="tbox">
+          <span class="tbox-title">próximas fechas</span>
+          <div class="tbox-body" id="home-dates"></div>
+        </div>
+        <div class="tbox" style="grid-column:1/-1">
+          <span class="tbox-title">notas recientes</span>
+          <div class="tbox-body" id="home-notes"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTAS -->
+    <section class="view" id="view-notes">
+      <div class="view-header">
+        <span class="view-prompt"><span class="nf-prompt-user">user</span><span class="tilde">@</span>spritenote <span class="cmd">~/notas</span></span>
+        <span class="view-title">Notas</span>
+        <span class="view-sub"><button class="btn btn-primary btn-sm" id="notes-new-btn">+ nueva</button></span>
+      </div>
+      <div class="notes-layout">
+        <div class="notes-list">
+          <div class="nl-head"><span>ARCHIVOS</span><span>md</span></div>
+          <div id="notes-list-items"></div>
+        </div>
+        <div class="note-pane" id="note-pane"></div>
+      </div>
+    </section>
+
+    <!-- TAREAS -->
+    <section class="view" id="view-tasks">
+      <div class="view-header">
+        <span class="view-prompt"><span class="nf-prompt-user">user</span><span class="tilde">@</span>spritenote <span class="cmd">~/tareas</span></span>
+        <span class="view-title">Tareas</span>
+        <div class="progress-wrap">
+          <div class="progress-bar"><div class="progress-fill" id="tasks-progress-fill"></div></div>
+          <span class="progress-label" id="tasks-progress-label">0/0</span>
+        </div>
+      </div>
+      <div class="add-row task-add-row">
+        <span class="prompt-sym">$</span>
+        <div class="task-compose">
+          <input type="text" id="task-input" placeholder="nueva tarea..." autocomplete="off">
+          <span class="task-syntax-hint" id="task-syntax-hint">ej. entregar reporte, alta, vence en 2 días</span>
+        </div>
+        <select id="task-priority-input" class="task-add-control" title="prioridad de la tarea" aria-label="prioridad">
+          <option value="lo">prioridad baja</option>
+          <option value="med">prioridad media</option>
+          <option value="hi">prioridad alta</option>
+        </select>
+        <input type="datetime-local" id="task-due-input" class="task-add-control task-due-input" title="fecha y hora de vencimiento (opcional)" aria-label="vencimiento opcional">
+        <span class="hint">Enter ↵</span>
+      </div>
+      <div class="task-list" id="tasks-list"></div>
+    </section>
+
+    <!-- RECORDATORIOS -->
+    <section class="view" id="view-reminders">
+      <div class="view-header">
+        <span class="view-prompt"><span class="nf-prompt-user">user</span><span class="tilde">@</span>spritenote <span class="cmd">~/recordatorios</span></span>
+        <span class="view-title">Recordatorios</span>
+        <div class="reminder-toolbar">
+          <label class="notification-mode-field" for="notification-mode">
+            <span>FRECUENCIA DE AVISOS</span>
+            <select id="notification-mode" title="frecuencia e insistencia de los avisos">
+              <option value="basic">baja · al vencer</option>
+              <option value="intermediate">media · seguimiento</option>
+              <option value="extreme">alta · insistente</option>
+            </select>
+          </label>
+          <label class="notif-ai-toggle" title="personalizar mensajes con el motor de IA activo">
+            <input type="checkbox" id="notification-ai"> IA
+          </label>
+          <button class="btn btn-sm" id="notification-enable">activar escritorio</button>
+          <button class="btn btn-sm" id="background-toggle" title="mantener SpriteNote en la bandeja y arrancar con el sistema">activar segundo plano</button>
+          <button class="btn btn-sm" id="notification-test" title="enviar una notificación de prueba">probar</button>
+          <button class="btn btn-sm" id="backup-export" title="guardar notas, tareas y preferencias en JSON">respaldo</button>
+          <button class="btn btn-sm" id="backup-import" title="restaurar un respaldo JSON">importar</button>
+          <input type="file" id="backup-import-file" accept="application/json,.json" hidden>
+        </div>
+      </div>
+      <div class="reminder-status" id="notification-status"></div>
+      <div class="reminder-form">
+        <input type="text" id="reminder-title-input" placeholder="recordatorio..." autocomplete="off">
+        <input type="datetime-local" id="reminder-due-input" aria-label="fecha y hora del recordatorio">
+        <input type="text" id="reminder-note-input" placeholder="nota (opcional)..." autocomplete="off">
+        <button class="btn btn-primary" id="reminder-add-btn">agregar</button>
+      </div>
+      <div class="reminder-list" id="reminders-list"></div>
+    </section>
+
+    <!-- FECHAS -->
+    <section class="view" id="view-dates">
+      <div class="view-header">
+        <span class="view-prompt"><span class="nf-prompt-user">user</span><span class="tilde">@</span>spritenote <span class="cmd">~/fechas</span></span>
+        <span class="view-title">Fechas importantes</span>
+      </div>
+      <div class="date-form">
+        <input type="text" class="df-title" id="date-title-input" placeholder="evento (ej. examen final)..." autocomplete="off">
+        <input type="date" id="date-date-input">
+        <input type="text" id="date-note-input" placeholder="nota (opcional)..." autocomplete="off">
+        <button class="btn btn-primary" id="date-add-btn">agregar</button>
+      </div>
+      <div class="date-list" id="dates-list"></div>
+    </section>
+
+    <!-- MEJORAS DE HÁBITOS -->
+    <section class="view" id="view-habits">
+      <div class="view-header">
+        <span class="view-prompt"><span class="nf-prompt-user">user</span><span class="tilde">@</span>spritenote <span class="cmd">~/habitos</span></span>
+        <span class="view-title">Mejoras de hábitos</span>
+        <span class="view-sub"><button class="btn btn-sm" id="habits-advice-btn">consejo ✦</button> <button class="btn btn-primary btn-sm" id="habits-eval-btn">evaluar mi día ✦</button></span>
+      </div>
+
+      <div class="habits-top">
+        <div class="grade-card" id="habits-grade-card"></div>
+        <div class="habits-week-box">
+          <div class="hw-title">esta semana</div>
+          <div class="week-strip" id="habits-week"></div>
+        </div>
+      </div>
+
+      <div class="add-row">
+        <span class="prompt-sym">+</span>
+        <input type="text" id="habit-input" placeholder="nuevo hábito o meta diaria (ej. meditar 10 min)..." autocomplete="off">
+        <span class="hint">Enter ↵</span>
+      </div>
+      <div class="habit-list" id="habits-list"></div>
+
+      <div class="habits-section-divider">
+        <span>◈ hábitos / metas semanales</span>
+        <span class="hsd-sub">no afectan la calificación diaria · sí al recuento total de la semana</span>
+      </div>
+      <div class="add-row">
+        <span class="prompt-sym">+</span>
+        <input type="text" id="weekly-goal-input" placeholder="nueva meta semanal (ej. ir al gimnasio 4 veces, terminar libro)..." autocomplete="off">
+        <span class="hint">Enter ↵</span>
+      </div>
+      <div class="habit-list" id="weekly-goals-list"></div>
+      <div class="weekly-goal-progress" id="weekly-goal-progress"></div>
+    </section>
+
+    <!-- CALENDARIO -->
+    <section class="view" id="view-calendar">
+      <div class="view-header">
+        <span class="view-prompt"><span class="nf-prompt-user">user</span><span class="tilde">@</span>spritenote <span class="cmd">~/calendario</span></span>
+        <span class="view-title">Calendario</span>
+        <div class="cal-toolbar">
+          <button class="cal-nav" id="cal-prev" title="mes anterior">‹</button>
+          <span class="cal-month" id="cal-month-label">—</span>
+          <button class="cal-nav" id="cal-next" title="mes siguiente">›</button>
+          <button class="btn btn-sm" id="cal-today">hoy</button>
+        </div>
+      </div>
+
+      <div class="cal-grid" id="cal-grid"></div>
+
+      <div class="week-summary">
+        <div class="ws-head">
+          <span class="ws-title">calificación de la semana</span>
+          <span class="ws-accum" id="cal-week-accum">—</span>
+        </div>
+        <div class="week-strip" id="cal-week"></div>
+      </div>
+
+      <div class="tbox" style="margin-top:18px">
+        <span class="tbox-title">próximas fechas</span>
+        <div class="tbox-body" id="cal-upcoming"></div>
+      </div>
+    </section>
+
+    <!-- GEMINI / CHAT -->
+    <section class="view" id="view-ai">
+      <div class="view-header">
+        <span class="view-prompt"><span class="nf-prompt-user">user</span><span class="tilde">@</span>spritenote <span class="cmd">~/ai</span></span>
+        <span class="view-title">IA</span>
+        <span class="view-sub ai-head">
+          <select id="ai-provider-select" class="ai-model-select" title="motor de IA"></select>
+          <select id="ai-model-select" class="ai-model-select" title="modelo de IA"></select>
+          <select id="ai-level-select" class="ai-model-select" title="nivel de razonamiento"></select>
+          <span id="ai-model-meta" class="ai-model-meta"></span>
+        </span>
+      </div>
+
+      <!-- Aviso de configuración de API key (visible solo si no hay key) -->
+      <div class="ai-keybox" id="ai-keybox" hidden>
+        <div class="ai-keybox-title">┤ configurar API key ├</div>
+        <p id="ai-keybox-copy">Para chatear necesitas una API key del motor seleccionado.
+           Se guarda <b>solo en este equipo</b> (en el perfil local de la app),
+           nunca se sube a ningún lado.</p>
+        <ol>
+          <li>Obtén una key en <span class="ai-link" id="ai-keybox-link">el sitio del proveedor</span></li>
+          <li>Escribe el comando: <code class="inline" id="ai-keybox-command">:ai key &lt;tu_api_key&gt;</code></li>
+        </ol>
+      </div>
+
+      <div class="chat-wrap" id="ai-chat-wrap">
+        <div class="chat-topbar" id="ai-topbar">
+          <div class="persona-toggle" id="ai-persona" role="tablist" aria-label="modo de chat">
+            <button type="button" data-p="gemini" class="active">✦ Gemini</button>
+            <button type="button" data-p="character">🦀 Personaje</button>
+          </div>
+        </div>
+        <div class="chat-peerbar" id="ai-peerbar" hidden>
+          <div class="chat-peer" id="ai-peer">
+            <img class="peer-av" id="ai-peer-av" alt="">
+            <div class="peer-meta">
+              <span class="peer-name" id="ai-peer-name">Claw'd</span>
+              <span class="peer-sub">● en línea</span>
+            </div>
+          </div>
+          <label class="personality-select-wrap" id="ai-personality-wrap">
+            estilo
+            <select id="ai-personality-select" title="personalidad del personaje"></select>
+          </label>
+          <button type="button" class="me-av-btn" id="ai-me-av" title="cambiar mi foto de perfil">
+            <img id="ai-me-av-img" alt="yo">
+            <span class="me-av-initial" id="ai-me-av-initial">?</span>
+          </button>
+          <input type="file" id="ai-avatar-file" accept="image/*" hidden>
+        </div>
+        <div class="chat-log" id="ai-log"></div>
+        <div class="chat-input-row">
+          <span class="prompt-sym">✦</span>
+          <textarea id="ai-input" rows="1" placeholder="pregúntale algo a la IA... (Enter envía · Shift+Enter salta línea)" autocomplete="off" spellcheck="false"></textarea>
+          <button class="btn btn-primary btn-sm" id="ai-send">enviar ↵</button>
+        </div>
+        <div class="chat-foot">
+          <span id="ai-status">listo</span>
+          <span class="chat-foot-right">:ai key · :ai persona · :ai clear</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════════ STATUS BAR ════════ -->
+  <div id="statusbar">
+    <div class="sb-seg mode" id="sb-mode">NORMAL</div>
+    <div class="sb-seg view" id="sb-view">inicio</div>
+    <div class="sb-spacer"></div>
+    <div class="sb-seg right clawd-mood" id="sb-clawd-mood">🦀 idle</div>
+    <div class="sb-seg right theme" id="sb-theme">ember</div>
+    <div class="sb-seg right clock" id="sb-clock">--:--</div>
+  </div>
+</div>
+
+<!-- command line (vim :) -->
+<div id="cmd-suggest"></div>
+<div id="cmdline">
+  <span class="cmd-prompt">:</span>
+  <span class="cmd-input-wrap">
+    <span id="cmd-ghost" aria-hidden="true"></span>
+    <input type="text" id="cmd-input" autocomplete="off" spellcheck="false">
+  </span>
+  <span class="block-cursor"></span>
+</div>
+
+<!-- ════════ COMPACT VIEW (hyprland / responsive clock mode) ════════ -->
+<div id="compact">
+  <div class="cp-ambient-viz" aria-hidden="true">
+    <canvas id="cp-music-spectrum-canvas"></canvas>
+  </div>
+
+  <div class="cp-header">
+    <div class="cp-title">SPRITENOTE</div>
+    <div class="cp-sub">companion · local</div>
+  </div>
+
+  <!-- ventana de chat (aparece al enviar un prompt) -->
+  <div class="cp-chat-wrap" id="cp-chat-wrap">
+    <div class="cp-chat-head">
+      <span class="cpc-title" id="cp-ai-title">✦ IA</span>
+      <button class="cpc-close" id="cp-chat-close" title="volver al reloj (Esc)">×</button>
+    </div>
+    <div class="cp-chat" id="cp-chat"></div>
+  </div>
+
+  <!-- Ancla inferior: hero + prompt + estado siempre permanecen dentro del viewport. -->
+  <div class="cp-bottom-stack">
+    <div class="cp-hero-row">
+      <div class="cp-sprite-wrap">
+        <img id="cp-sprite" class="cp-sprite" src="assets/clawd-laptop.gif" alt="Claw'd" title="¡pícame!">
+        <div class="cp-mood" id="cp-mood">coding</div>
+      </div>
+
+      <div class="cp-terminal">
+        <div class="cp-welcome"><span class="cp-prompt">&gt;</span> Welcome back, <span class="cp-user" id="cp-user">user</span><span class="block-cursor"></span></div>
+        <div class="cp-date" id="cp-date"></div>
+        <div class="cp-clock" id="cp-clock">00:00</div>
+      </div>
+    </div>
+
+    <div class="cp-input-wrap">
+      <span class="cp-dollar">$</span>
+      <input type="text" id="cp-input" autocomplete="off" spellcheck="false" placeholder="pregúntale a la IA...  (: para comandos)">
+      <button id="cp-send" title="Enter">↵</button>
+    </div>
+
+    <div class="cp-hints">escribe para chatear con la IA · :tasks · :ai key &lt;key&gt; · :help</div>
+
+    <div class="cp-statusbar">
+      <span id="cp-mode-label">NORMAL</span>
+      <span class="cp-sb-sep">·</span>
+      <button type="button" id="cp-music-viz-toggle" class="cp-audio-toggle" aria-pressed="false" title="activar visualizador de audio">
+        <span class="cp-audio-glyph" aria-hidden="true">≋</span>
+        <span id="cp-music-viz-status">AUDIO</span>
+      </button>
+      <span class="cp-sb-sep">·</span>
+      <span class="cp-watch-label">spritenote --watch</span>
+      <span class="cp-sb-right" id="cp-uptime">up 0m</span>
+    </div>
+  </div>
+</div>
+
+<!-- toasts -->
+<div id="toast-wrap"></div>
+
+<!-- Centro de ajustes -->
+<div id="visualizer-settings-overlay" class="visualizer-settings-overlay" hidden>
+  <section class="visualizer-settings-panel" role="dialog" aria-modal="true" aria-labelledby="visualizer-settings-title">
+    <header class="visualizer-settings-head">
+      <span id="visualizer-settings-title">SPRITENOTE.CFG</span>
+      <button type="button" id="visualizer-settings-close" title="cerrar ajustes">×</button>
+    </header>
+    <nav class="settings-tabs" aria-label="secciones de ajustes">
+      <button type="button" data-settings-tab="visualizer" aria-selected="true">VISUALIZADOR</button>
+      <button type="button" data-settings-tab="characters" aria-selected="false">PERSONAJES</button>
+      <button type="button" data-settings-tab="developer" aria-selected="false" hidden>DEV.MODE</button>
+    </nav>
+    <div class="settings-content">
+      <section class="settings-pane active" data-settings-pane="visualizer">
+        <div class="settings-section-head"><span>MUSIC SPECTRUM</span><small>PREVIEW // LIVE</small></div>
+        <div class="visualizer-settings-body">
+          <label class="visualizer-setting" for="visualizer-bars">
+            <span>LÍNEAS <output id="visualizer-bars-value">36</output></span>
+            <input type="range" id="visualizer-bars" min="12" max="64" step="2" value="36">
+          </label>
+          <label class="visualizer-setting" for="visualizer-sensitivity">
+            <span>SENSIBILIDAD <output id="visualizer-sensitivity-value">1.2×</output></span>
+            <input type="range" id="visualizer-sensitivity" min="0.5" max="3" step="0.1" value="1.2">
+          </label>
+          <label class="visualizer-setting" for="visualizer-gap">
+            <span>SEPARACIÓN <output id="visualizer-gap-value">2px</output></span>
+            <input type="range" id="visualizer-gap" min="0" max="5" step="1" value="2">
+          </label>
+          <label class="visualizer-setting" for="visualizer-smoothing">
+            <span>SUAVIZADO <output id="visualizer-smoothing-value">78%</output></span>
+            <input type="range" id="visualizer-smoothing" min="0" max="0.95" step="0.01" value="0.78">
+          </label>
+          <fieldset class="visualizer-layout-setting">
+            <legend>DISTRIBUCIÓN DE FRECUENCIAS</legend>
+            <div class="visualizer-layout-options" id="visualizer-layout-options">
+              <button type="button" data-layout="linear" aria-pressed="true" title="bajos a la izquierda, agudos a la derecha">ESCALA</button>
+              <button type="button" data-layout="bass-center" aria-pressed="false" title="bajos en el centro, agudos hacia las orillas">BAJOS CENTRO</button>
+              <button type="button" data-layout="bass-edges" aria-pressed="false" title="bajos en las orillas, agudos hacia el centro">BAJOS ORILLAS</button>
+            </div>
+          </fieldset>
+          <fieldset class="visualizer-layout-setting visualizer-style-setting">
+            <legend>ESTILO</legend>
+            <div class="visualizer-layout-options" id="visualizer-style-options">
+              <button type="button" data-style="spectrum" aria-pressed="true">ESPECTRO</button>
+              <button type="button" data-style="digital" aria-pressed="false">DIGITAL</button>
+              <button type="button" data-style="analog" aria-pressed="false">ANÁLOGO</button>
+            </div>
+          </fieldset>
+        </div>
+        <button type="button" class="settings-secondary" id="visualizer-settings-reset">RESTAURAR VISUALIZADOR</button>
+      </section>
+
+      <section class="settings-pane" data-settings-pane="characters">
+        <div class="character-toolbar">
+          <div>
+            <strong>PERSONAJES INSTALADOS</strong>
+            <small>Importa un paquete o crea uno reacción por reacción.</small>
+          </div>
+          <div class="settings-actions">
+            <button type="button" id="character-package-import">IMPORTAR .SPRITEPET</button>
+            <button type="button" id="character-new">+ CREAR</button>
+          </div>
+        </div>
+        <div class="character-workspace">
+          <aside id="character-list" class="character-list" aria-label="personajes"></aside>
+          <div class="character-editor">
+            <div class="character-profile-fields">
+              <label>NOMBRE<input id="character-name" maxlength="40" autocomplete="off"></label>
+              <label>ID TÉCNICO<input id="character-key" maxlength="40" pattern="[a-z0-9-]+" autocomplete="off"></label>
+              <label class="character-emoji-field">SÍMBOLO<input id="character-emoji" maxlength="4" autocomplete="off"></label>
+              <label class="character-scale-field" id="character-scale-field">
+                <span>ESCALA EN SIDEBAR <output id="character-sidebar-scale-value">100%</output></span>
+                <input type="range" id="character-sidebar-scale" min="0.8" max="1.45" step="0.05" value="1">
+              </label>
+            </div>
+            <div class="character-avatar-card">
+              <div class="character-avatar-preview" id="character-avatar-preview" aria-hidden="true"><i>+</i></div>
+              <div class="character-avatar-copy">
+                <strong>FOTO DE PERFIL</strong>
+                <span>Se usa como mini avatar en la app y como icono de notificaciones del personaje.</span>
+              </div>
+              <button type="button" id="character-avatar-choose">IMPORTAR FOTO</button>
+            </div>
+            <div id="character-editor-note" class="settings-note"></div>
+            <div class="reaction-head"><strong>GIFS DE REACCIÓN</strong><span><b>idle es obligatorio</b> · los demás usan idle como respaldo</span></div>
+            <div id="character-reactions" class="reaction-grid"></div>
+            <details class="creation-guide">
+              <summary>REQUISITOS Y RECOMENDACIONES DE CREACIÓN</summary>
+              <div class="creation-guide-grid">
+                <div><b>OBLIGATORIO</b><p>GIF animado válido, reacción <code>idle</code>, fondo transparente o uniforme y personaje centrado. Máximo 20 MB por GIF.</p></div>
+                <div><b>RECOMENDADO</b><p>Mismo encuadre en todos los GIF, formato cuadrado, 512 px o menos, loop limpio, sin texto pequeño y duración de 3 a 6 segundos. Foto de perfil PNG/JPG/WebP cuadrada, 512×512 y menor a 5 MB.</p></div>
+              </div>
+            </details>
+            <div class="character-editor-actions">
+              <button type="button" class="danger" id="character-delete">ELIMINAR</button>
+              <button type="button" id="character-package-export">EXPORTAR PAQUETE</button>
+              <button type="button" class="primary" id="character-save">GUARDAR PERSONAJE</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-pane" data-settings-pane="developer">
+        <div class="developer-head">
+          <div><strong>PERSONALITY LAB</strong><small>Editor avanzado de system prompts por personaje.</small></div>
+          <select id="developer-character-select" aria-label="personaje a editar"></select>
+        </div>
+        <div class="prompt-rules">
+          <b>CONTRATO DE INTEGRACIÓN</b>
+          <span>Define identidad, voz, límites y ejemplos concretos.</span>
+          <span>Ambos modos deben conservar respuestas legibles y útiles.</span>
+          <span>No uses Markdown pesado: evita títulos, tablas y listas largas en el chat.</span>
+          <span>No pidas claves, contraseñas ni datos privados innecesarios.</span>
+        </div>
+        <div class="personality-editors">
+          <article class="personality-editor">
+            <div class="personality-mode-head"><label>MODO A<input id="personality-a-label" maxlength="24"></label><output id="personality-a-count">0</output></div>
+            <textarea id="personality-a-prompt" spellcheck="true" placeholder="Eres... Cómo hablas... Nunca..."></textarea>
+          </article>
+          <article class="personality-editor">
+            <div class="personality-mode-head"><label>MODO B<input id="personality-b-label" maxlength="24"></label><output id="personality-b-count">0</output></div>
+            <textarea id="personality-b-prompt" spellcheck="true" placeholder="Segunda personalidad del personaje..."></textarea>
+          </article>
+        </div>
+        <div id="personality-validation" class="settings-note"></div>
+        <div class="developer-actions"><button type="button" class="primary" id="personality-save">GUARDAR PERSONALIDADES</button></div>
+      </section>
+    </div>
+    <footer class="visualizer-settings-foot">
+      <span>CFG.LOCAL // PRIVATE</span>
+      <button type="button" id="settings-developer-unlock" title="herramientas para creadores">&gt;_ DESARROLLO</button>
+    </footer>
+  </section>
+  <input type="file" id="character-gif-fallback" accept="image/gif,.gif" hidden>
+  <input type="file" id="character-avatar-fallback" accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp" hidden>
+  <input type="file" id="character-package-fallback" accept=".spritepet,application/json,.json" hidden>
+</div>
+
+<!-- ════════ CRT OVERLAYS + BOOT/POST ════════ -->
+<div id="cn-scan" class="crt-layer"></div>
+<div id="cn-grille" class="crt-layer"></div>
+<div id="cn-vig" class="crt-layer"></div>
+<div id="cn-bulge" class="crt-layer"></div>
+<div id="cn-flick" class="crt-layer"></div>
+<div id="cn-sweep" class="crt-layer"></div>
+<div id="boot-overlay" aria-live="polite">
+  <div id="cn-turnon"></div>
+  <div id="boot-lines"></div>
+  <span class="boot-cursor"></span>
+  <div class="boot-skip">[ click o cualquier tecla para saltar ]</div>
+</div>
+
+<!-- ════════ EVALUACIÓN DIARIA (Claw'd al centro) ════════ -->
+<div id="daily-eval" class="eval-overlay" hidden>
+  <div class="eval-card">
+    <button class="eval-close" id="eval-close" title="cerrar">×</button>
+    <div class="eval-head">checklist diario</div>
+    <div class="eval-date" id="eval-date"></div>
+    <img id="eval-clawd" class="eval-clawd" src="assets/clawd-idea.gif" alt="Claw'd">
+    <div class="eval-grade g-_" id="eval-grade">—</div>
+    <div class="eval-gradelabel" id="eval-gradelabel"></div>
+    <div class="eval-msg" id="eval-msg"></div>
+    <div class="eval-count" id="eval-count"></div>
+    <div class="eval-list" id="eval-list"></div>
+    <button class="btn btn-primary eval-done" id="eval-done">listo 🦀</button>
+  </div>
+</div>
+
+<script src="js/sysinfo.js"></script>
+<script src="js/store.js"></script>
+<script src="js/markdown.js"></script>
+<script src="js/themes.js"></script>
+<script src="js/sprite.js"></script>
+<script src="js/command.js"></script>
+<script src="../shared/ai-intent.js"></script>
+<script src="js/gemini.js"></script>
+<script src="../shared/reminder-policy.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
